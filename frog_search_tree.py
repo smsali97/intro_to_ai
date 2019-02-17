@@ -42,23 +42,36 @@ class FrogGameSearchTree():
     INITIAL_STATE = '1110222'
     FINAL_STATE = '2220111'
 
-
+    # Returns string representation of the Frog Search Tree
     def __str__(self):
         return str(self.root)
 
+    # Constructor
     def __init__(self):
         self.G = nx.DiGraph()
-        self.counter = 0
         self.root = Node(self.INITIAL_STATE)
 
+    '''
+    Is the frog at that position green?
+    '''
     def isGreenFrog(self,frog):
         return frog is '1'
+    '''
+    Is the frog at that position brown?
+    '''
     def isBrownFrog(self,frog):
         return frog is '2'
 
+    '''
+    Is there no frog at that position?
+    '''
     def hasNoFrog(self,frog):
         return frog is '0'
 
+    '''
+    Constructs the search tree of the graph and calls add_edge
+    to create the search graph
+    '''
     def getStates(self):
 
         unexplored_nodes = queue.Queue()
@@ -67,9 +80,9 @@ class FrogGameSearchTree():
         # Add starting Node
         self.G.add_node(self.root.state)
 
-        ctr = 0
         while True:
             latest_node = unexplored_nodes.get()
+
             if latest_node.state is self.FINAL_STATE:
                 exit()
 
@@ -77,8 +90,6 @@ class FrogGameSearchTree():
                 frogs = latest_node.state
 
 
-                print("Iteration # " + str(ctr))
-                ctr += 1
                 for i in range(len(frogs)):
 
                     if self.isGreenFrog(frogs[i]) and i < len(frogs) - 1:
@@ -153,10 +164,9 @@ class FrogGameSearchTree():
                 print("Bye\n")
                 return
 
+    '''Creates an edge between old_state and new_state and creates a new node
+       if necessary '''
     def add_edge(self,old_state,new_state):
-        print(old_state + ',' + new_state)
-        # if not self.G.has_node(new_state):
-        #     self.G.add_node(new_state)
 
         if not self.G.has_edge(old_state,new_state):
             self.G.add_edge(old_state,new_state)
@@ -166,9 +176,10 @@ class FrogGameSearchTree():
 def main():
     tree = FrogGameSearchTree()
     tree.getStates()
+    print('Search Tree of Frog Problem\n' + '-'*75 + '\n')
     print(tree)
-
-    nx.draw_spectral(tree.G,with_labels = True,node_size=150,font_size=10)
+    print('Number of States in Frog Problem: {} \n'.format( len(tree.G) ))
+    nx.draw_spectral(tree.G,with_labels = True,node_size=130,font_size=10,node_color=range(72),cmap=plt.cm.Pastel2,arrowsize=7,alpha=0.7,style='dashed')
     plt.savefig("simple_path.png") # save as png
     plt.show() # display
 
