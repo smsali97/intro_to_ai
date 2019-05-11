@@ -97,7 +97,7 @@ Since this is an unsupervised learning algorithm we cannot say much about the re
 Following might be some of the factors involved which might have influenced grouping these plants together
 
 * Geographical/Territory-wise segmentation
-* Sharing some physicl botanical features with the other plants 
+* Sharing some physical botanical features with the other plants 
 * Certain climatic conditions or certain requirements (for e.g water consumption of the plant)
 
 For a better recommendation we need to have some domain knowledge behind this dataset which in this case is severly lacking.
